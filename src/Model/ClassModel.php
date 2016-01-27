@@ -7,10 +7,13 @@ use Krlove\Generator\Collection\LineCollection;
 use Krlove\Generator\Collection\RenderableCollection;
 use Krlove\Generator\Line;
 use Krlove\Generator\Line\EmptyLine;
+use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\RenderableInterface;
 
 class ClassModel implements RenderableInterface
 {
+    use DocBlockTrait;
+
     /**
      * @var ClassNameModel
      */
@@ -73,6 +76,10 @@ class ClassModel implements RenderableInterface
         if (!$this->uses->isEmpty()) {
             $output[] = $this->uses->render();
             $output[] = new EmptyLine(2);
+        }
+        if ($this->docBlock !== null) {
+            $output[] = $this->docBlock->render();
+            $output[] = new EmptyLine();
         }
         $output[] = $this->name->render();
         $output[] = new EmptyLine();

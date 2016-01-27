@@ -5,6 +5,7 @@ namespace Krlove\Generator\Model;
 use Krlove\Generator\Collection\LineCollection;
 use Krlove\Generator\Collection\RenderableCollection;
 use Krlove\Generator\Line\Line;
+use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\Model\Traits\ModifierTrait;
 use Krlove\Generator\RenderableInterface;
 
@@ -16,6 +17,7 @@ use Krlove\Generator\RenderableInterface;
 class MethodModel implements RenderableInterface
 {
     use ModifierTrait;
+    use DocBlockTrait;
 
     /**
      * @var string
@@ -33,12 +35,14 @@ class MethodModel implements RenderableInterface
     protected $body;
 
     /**
-     * PHPClassMethod constructor.
+     * MethodModel constructor.
      * @param string $name
+     * @param string $modifier
      */
-    public function __construct($name)
+    public function __construct($name, $modifier = 'public')
     {
-        $this->setName($name);
+        $this->setName($name)
+            ->setModifier($modifier);
 
         $this->arguments = new RenderableCollection();
     }
@@ -49,18 +53,21 @@ class MethodModel implements RenderableInterface
     public function render()
     {
         $lines = new LineCollection();
-        $output = sprintf('%s function %s(', $this->modifier, $this->name);
+        if ($this->docBlock !== null) {
+            $lines[] = $this->docBlock->render();
+        }
+        $function = sprintf('%s function %s(', $this->modifier, $this->name);
         if ($this->arguments) {
             $arguments = [];
             foreach ($this->arguments as $argument) {
                 $arguments[] = $argument->render();
             }
 
-            $output .= implode(', ', $arguments);
+            $function .= implode(', ', $arguments);
         }
-        $output .= ')';
+        $function .= ')';
 
-        $lines[] = new Line($output);
+        $lines[] = new Line($function);
         $lines[] = new Line('{');
         if ($this->body) {
             $lines[] = new Line($this->body); // todo make body renderable

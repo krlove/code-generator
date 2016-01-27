@@ -28,10 +28,14 @@ class ArgumentModel implements RenderableInterface
     /**
      * ArgumentModel constructor.
      * @param string $name
+     * @param string|null $type
+     * @param mixed|null $default
      */
-    public function __construct($name)
+    public function __construct($name, $type = null, $default = null)
     {
-        $this->setName($name);
+        $this->setName($name)
+            ->setType($type)
+            ->setDefault($default);
     }
 
     /**

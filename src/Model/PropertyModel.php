@@ -2,13 +2,15 @@
 
 namespace Krlove\Generator\Model;
 
-use Krlove\Generator\Line\Line;
+use Krlove\Generator\Collection\LineCollection;
+use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\Model\Traits\ModifierTrait;
 use Krlove\Generator\Model\Traits\ValueTrait;
 use Krlove\Generator\RenderableInterface;
 
 /**
  * TODO: add support for static and virtual properties
+ * TODO: add abstract and final modifiers
  * Class PHPClassProperty
  * @package Krlove\Generator\Model
  */
@@ -16,6 +18,7 @@ class PropertyModel implements RenderableInterface
 {
     use ValueTrait;
     use ModifierTrait;
+    use DocBlockTrait;
 
     /**
      * @var string
@@ -23,12 +26,16 @@ class PropertyModel implements RenderableInterface
     protected $name;
 
     /**
-     * PHPClassProperty constructor.
+     * PropertyModel constructor.
      * @param string $name
+     * @param string $modifier
+     * @param mixed|null $value
      */
-    public function __construct($name)
+    public function __construct($name, $modifier = 'public', $value = null)
     {
-        $this->setName($name);
+        $this->setName($name)
+            ->setModifier($modifier)
+            ->setValue($value);
     }
 
     /**
@@ -36,16 +43,21 @@ class PropertyModel implements RenderableInterface
      */
     public function render()
     {
-        $output = sprintf('%s $%s', $this->modifier, $this->name);
+        $lines = new LineCollection();
+        if ($this->docBlock !== null) {
+            $lines[] = $this->docBlock->render();
+        }
+        $property = sprintf('%s $%s', $this->modifier, $this->name);
         if ($this->value !== null) {
             $value = $this->renderValue();
             if ($value !== null) {
-                $output .= sprintf(' = %s', $this->renderValue());
+                $property .= sprintf(' = %s', $this->renderValue());
             }
         }
-        $output .= ';';
+        $property .= ';';
+        $lines[] = $property;
 
-        return new Line($output);
+        return $lines;
     }
 
     /**

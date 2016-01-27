@@ -30,12 +30,12 @@ class ClassNameModel implements RenderableInterface
     /**
      * PHPClassName constructor.
      * @param string $name
-     * @param string $extends
+     * @param string|null $extends
      */
-    public function __construct($name, $extends)
+    public function __construct($name, $extends = null)
     {
-        $this->setName($name);
-        $this->setExtends($extends);
+        $this->setName($name)
+            ->setExtends($extends);
     }
 
     /**
@@ -43,19 +43,19 @@ class ClassNameModel implements RenderableInterface
      */
     public function render()
     {
-        $lines = new LineCollection();
+        $output = new LineCollection();
         $name = sprintf('class %s', $this->name);
         if ($this->extends !== null) {
             $name .= sprintf(' extends %s', $this->extends);
         }
-        if ($this->implements !== null) {
+        if (count($this->implements) > 0) {
             $name .= sprintf(' implements %s', implode(', ', $this->implements));
         }
 
-        $lines[] = new Line($name);
-        $lines[] = new Line('{');
+        $output[] = new Line($name);
+        $output[] = new Line('{');
 
-        return $lines;
+        return $output;
     }
 
     /**
