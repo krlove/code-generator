@@ -2,15 +2,14 @@
 
 namespace Krlove\Generator\Model;
 
-use Krlove\Generator\Line\Line;
 use Krlove\Generator\Model\Traits\ValueTrait;
-use Krlove\Generator\RenderableInterface;
+use Krlove\Generator\RenderableModel;
 
 /**
  * Class PHPClassConstant
  * @package Krlove\Generator\Model
  */
-class ConstantModel implements RenderableInterface
+class ConstantModel extends RenderableModel
 {
     use ValueTrait;
 
@@ -33,11 +32,11 @@ class ConstantModel implements RenderableInterface
     /**
      * {@inheritDoc}
      */
-    public function render()
+    public function toLines()
     {
         $value = $this->renderValue();
 
-        return new Line(sprintf('const %s = %s;', $this->name, $value));
+        return sprintf('const %s = %s;', $this->name, $value);
     }
 
     /**

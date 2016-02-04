@@ -2,14 +2,13 @@
 
 namespace Krlove\Generator\Model;
 
-use Krlove\Generator\Line\Line;
-use Krlove\Generator\RenderableInterface;
+use Krlove\Generator\RenderableModel;
 
 /**
  * Class PHPClassNamespace
  * @package Krlove\Generator\Model
  */
-class NamespaceModel implements RenderableInterface
+class NamespaceModel extends RenderableModel
 {
     /**
      * @var string
@@ -28,9 +27,9 @@ class NamespaceModel implements RenderableInterface
     /**
      * {@inheritDoc}
      */
-    public function render()
+    public function toLines()
     {
-        return new Line(sprintf('namespace %s;', $this->namespace));
+        return sprintf('namespace %s;', $this->namespace);
     }
 
     /**

@@ -2,14 +2,13 @@
 
 namespace Krlove\Generator\Model;
 
-use Krlove\Generator\Line\Line;
-use Krlove\Generator\RenderableInterface;
+use Krlove\Generator\RenderableModel;
 
 /**
  * Class PHPClassTrait
  * @package Krlove\Generator\Model
  */
-class UseTraitModel implements RenderableInterface
+class UseTraitModel extends RenderableModel
 {
     /**
      * @var string
@@ -28,9 +27,9 @@ class UseTraitModel implements RenderableInterface
     /**
      * {@inheritDoc}
      */
-    public function render()
+    public function toLines()
     {
-        return new Line(sprintf('use %s;', $this->name));
+        return sprintf('use %s;', $this->name);
     }
 
     /**

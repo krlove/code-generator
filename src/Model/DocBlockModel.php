@@ -2,14 +2,13 @@
 
 namespace Krlove\Generator\Model;
 
-use Krlove\Generator\Collection\LineCollection;
-use Krlove\Generator\RenderableInterface;
+use Krlove\Generator\RenderableModel;
 
 /**
  * Class DocBlockModel
  * @package Krlove\Generator\Model
  */
-class DocBlockModel implements RenderableInterface
+class DocBlockModel extends RenderableModel
 {
     /**
      * @var array
@@ -30,20 +29,20 @@ class DocBlockModel implements RenderableInterface
     /**
      * {@inheritDoc}
      */
-    public function render()
+    public function toLines()
     {
-        $output = new LineCollection();
-        $output[] = '/**';
+        $lines = [];
+        $lines[] = '/**';
         if ($this->content) {
             foreach ($this->content as $item) {
-                $output[] = sprintf(' * %s', $item);
+                $lines[] = sprintf(' * %s', $item);
             }
         } else {
-            $output[] = ' *';
+            $lines[] = ' *';
         }
-        $output[] = ' */';
+        $lines[] = ' */';
 
-        return $output;
+        return $lines;
     }
 
     /**

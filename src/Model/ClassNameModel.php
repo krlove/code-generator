@@ -2,15 +2,13 @@
 
 namespace Krlove\Generator\Model;
 
-use Krlove\Generator\Collection\LineCollection;
-use Krlove\Generator\Line\Line;
-use Krlove\Generator\RenderableInterface;
+use Krlove\Generator\RenderableModel;
 
 /**
  * Class Name
  * @package Krlove\Generator\Model
  */
-class ClassNameModel implements RenderableInterface
+class ClassNameModel extends RenderableModel
 {
     /**
      * @var string
@@ -41,9 +39,9 @@ class ClassNameModel implements RenderableInterface
     /**
      * {@inheritDoc}
      */
-    public function render()
+    public function toLines()
     {
-        $output = new LineCollection();
+        $lines = [];
         $name = sprintf('class %s', $this->name);
         if ($this->extends !== null) {
             $name .= sprintf(' extends %s', $this->extends);
@@ -52,10 +50,10 @@ class ClassNameModel implements RenderableInterface
             $name .= sprintf(' implements %s', implode(', ', $this->implements));
         }
 
-        $output[] = new Line($name);
-        $output[] = new Line('{');
+        $lines[] = $name;
+        $lines[] = '{';
 
-        return $output;
+        return $lines;
     }
 
     /**

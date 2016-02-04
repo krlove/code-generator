@@ -2,19 +2,16 @@
 
 namespace Krlove\Generator\Model;
 
-use Krlove\Generator\Collection\LineCollection;
-use Krlove\Generator\Collection\RenderableCollection;
-use Krlove\Generator\Line\Line;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\Model\Traits\ModifierTrait;
-use Krlove\Generator\RenderableInterface;
+use Krlove\Generator\RenderableModel;
 
 /**
  * TODO: add support for static and virtual methods
  * Class PHPClassMethod
  * @package Krlove\Generator\Model
  */
-class MethodModel implements RenderableInterface
+class MethodModel extends RenderableModel
 {
     use ModifierTrait;
     use DocBlockTrait;
@@ -25,9 +22,9 @@ class MethodModel implements RenderableInterface
     protected $name;
 
     /**
-     * @var RenderableCollection|ArgumentModel[]
+     * @var ArgumentModel[]
      */
-    protected $arguments;
+    protected $arguments = [];
 
     /**
      * @var string
@@ -43,16 +40,14 @@ class MethodModel implements RenderableInterface
     {
         $this->setName($name)
             ->setModifier($modifier);
-
-        $this->arguments = new RenderableCollection();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function render()
+    public function toLines()
     {
-        $lines = new LineCollection();
+        $lines = [];
         if ($this->docBlock !== null) {
             $lines[] = $this->docBlock->render();
         }
@@ -67,12 +62,12 @@ class MethodModel implements RenderableInterface
         }
         $function .= ')';
 
-        $lines[] = new Line($function);
-        $lines[] = new Line('{');
+        $lines[] = $function;
+        $lines[] = '{';
         if ($this->body) {
-            $lines[] = new Line($this->body); // todo make body renderable
+            $lines[] = $this->body; // TODO: make body renderable
         }
-        $lines[] = new Line('}');
+        $lines[] = '}';
 
         return $lines;
     }

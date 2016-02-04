@@ -2,15 +2,10 @@
 
 namespace Krlove\Generator\Model;
 
-use Krlove\Generator\Collection\IndentLineCollection;
-use Krlove\Generator\Collection\LineCollection;
-use Krlove\Generator\Collection\RenderableCollection;
-use Krlove\Generator\Line;
-use Krlove\Generator\Line\EmptyLine;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
-use Krlove\Generator\RenderableInterface;
+use Krlove\Generator\RenderableModel;
 
-class ClassModel implements RenderableInterface
+class ClassModel extends RenderableModel
 {
     use DocBlockTrait;
 
@@ -25,83 +20,62 @@ class ClassModel implements RenderableInterface
     protected $namespace;
 
     /**
-     * @var RenderableCollection|UseNamespaceModel[]
+     * @var UseNamespaceModel[]
      */
-    protected $uses;
+    protected $uses = [];
 
     /**
-     * @var RenderableCollection|UseTraitModel[]
+     * @var UseTraitModel[]
      */
-    protected $traits;
+    protected $traits = [];
 
     /**
-     * @var RenderableCollection|ConstantModel[]
+     * @var ConstantModel[]
      */
-    protected $constants;
+    protected $constants = [];
 
     /**
-     * @var RenderableCollection|PropertyModel[]
+     * @var PropertyModel[]
      */
-    protected $properties;
+    protected $properties = [];
 
     /**
-     * @var RenderableCollection|MethodModel[]
+     * @var MethodModel[]
      */
-    protected $methods;
-
-    /**
-     * PHPClass constructor.
-     */
-    public function __construct()
-    {
-        $this->uses       = new RenderableCollection();
-        $this->traits     = new RenderableCollection();
-        $this->constants  = new RenderableCollection();
-        $this->properties = new RenderableCollection();
-        $this->methods    = new RenderableCollection();
-    }
+    protected $methods = [];
 
     /**
      * {@inheritDoc}
      */
-    public function render()
+    public function toLines()
     {
-        $output = new LineCollection('');
-        $output[] = '<?php';
-        $output[] = new EmptyLine(2);
+        $lines = [];
+        $lines[] = $this->ln('<?php');
         if ($this->namespace !== null) {
-            $output[] = $this->namespace->render();
-            $output[] = new EmptyLine(2);
+            $lines[] = $this->ln($this->namespace->render());
         }
-        if (!$this->uses->isEmpty()) {
-            $output[] = $this->uses->render();
-            $output[] = new EmptyLine(2);
+        if (count($this->uses) > 0) {
+            $lines[] = $this->renderArrayLn($this->uses);
         }
         if ($this->docBlock !== null) {
-            $output[] = $this->docBlock->render();
-            $output[] = new EmptyLine();
+            $lines[] = $this->ln($this->docBlock->render());
         }
-        $output[] = $this->name->render();
-        $output[] = new EmptyLine();
-        if (!$this->traits->isEmpty()) {
-            $output[] = new IndentLineCollection($this->traits->render(), 4);
-            $output[] = new EmptyLine(2);
+        $lines[] = $this->name->render();
+        if (count($this->traits) > 0) {
+            $lines[] = $this->renderArrayLn($this->traits, 4);
         }
-        if (!$this->constants->isEmpty()) {
-            $output[] = new IndentLineCollection($this->constants->render(), 4);
-            $output[] = new EmptyLine(2);
+        if (count($this->constants) > 0) {
+            $lines[] = $this->renderArrayLn($this->constants, 4);
         }
-        if (!$this->properties->isEmpty()) {
-            $output[] = new IndentLineCollection($this->properties->render(), 4);
-            $output[] = new EmptyLine(2);
+        if (count($this->properties) > 0) {
+            $lines[] = $this->renderArrayLn($this->properties, 4, str_repeat(PHP_EOL, 2));
         }
-        if (!$this->methods->isEmpty()) {
-            $output[] = new IndentLineCollection($this->methods->render(), 4);
-            $output[] = new EmptyLine();
+        if (count($this->methods) > 0) {
+            $lines[] = $this->renderArray($this->methods, 4, str_repeat(PHP_EOL, 2));
         }
-        $output[] = '}';
+        $lines[] = $this->ln('}');
 
-        return $output;
+        return $lines;
     }
 
     /**
@@ -145,7 +119,7 @@ class ClassModel implements RenderableInterface
     }
 
     /**
-     * @return RenderableCollection
+     * @return UseNamespaceModel[]
      */
     public function getUses()
     {
@@ -165,7 +139,7 @@ class ClassModel implements RenderableInterface
     }
 
     /**
-     * @return UseTraitModel|RenderableCollection
+     * @return UseTraitModel[]
      */
     public function getTraits()
     {
@@ -185,7 +159,7 @@ class ClassModel implements RenderableInterface
     }
 
     /**
-     * @return ConstantModel[]|RenderableCollection
+     * @return ConstantModel[]
      */
     public function getConstants()
     {
@@ -205,7 +179,7 @@ class ClassModel implements RenderableInterface
     }
 
     /**
-     * @return PropertyModel[]|RenderableCollection
+     * @return PropertyModel[]
      */
     public function getProperties()
     {
@@ -225,7 +199,7 @@ class ClassModel implements RenderableInterface
     }
 
     /**
-     * @return MethodModel[]|RenderableCollection
+     * @return MethodModel[]
      */
     public function getMethods()
     {

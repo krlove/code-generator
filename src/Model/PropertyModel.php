@@ -2,11 +2,10 @@
 
 namespace Krlove\Generator\Model;
 
-use Krlove\Generator\Collection\LineCollection;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\Model\Traits\ModifierTrait;
 use Krlove\Generator\Model\Traits\ValueTrait;
-use Krlove\Generator\RenderableInterface;
+use Krlove\Generator\RenderableModel;
 
 /**
  * TODO: add support for static and virtual properties
@@ -14,7 +13,7 @@ use Krlove\Generator\RenderableInterface;
  * Class PHPClassProperty
  * @package Krlove\Generator\Model
  */
-class PropertyModel implements RenderableInterface
+class PropertyModel extends RenderableModel
 {
     use ValueTrait;
     use ModifierTrait;
@@ -41,9 +40,9 @@ class PropertyModel implements RenderableInterface
     /**
      * {@inheritDoc}
      */
-    public function render()
+    public function toLines()
     {
-        $lines = new LineCollection();
+        $lines = [];
         if ($this->docBlock !== null) {
             $lines[] = $this->docBlock->render();
         }

@@ -51,7 +51,7 @@ trait ValueTrait
                 $value = sprintf('\'%s\'', addslashes($this->getValue()));
                 break;
             case 'array':
-                $value = '1'; // add array support
+                $value = '1'; // TODO: add array support
                 break;
             default:
                 $value = null;
