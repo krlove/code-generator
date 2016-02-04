@@ -2,13 +2,13 @@
 
 namespace Krlove\Generator\Model;
 
-use Krlove\Generator\RenderableInterface;
+use Krlove\Generator\RenderableModel;
 
 /**
  * Class Argument
  * @package Krlove\Generator\Model
  */
-class ArgumentModel implements RenderableInterface
+class ArgumentModel extends RenderableModel
 {
     /**
      * @var string
@@ -41,7 +41,7 @@ class ArgumentModel implements RenderableInterface
     /**
      * {@inheritDoc}
      */
-    public function render()
+    public function toLines()
     {
         if ($this->type !== null) {
             return $this->type . ' ' . $this->name;

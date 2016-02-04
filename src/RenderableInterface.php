@@ -2,8 +2,6 @@
 
 namespace Krlove\Generator;
 
-use Krlove\Generator\Line\LineInterface;
-
 /**
  * Interface RenderableInterface
  * @package Krlove\Generator
@@ -11,7 +9,9 @@ use Krlove\Generator\Line\LineInterface;
 interface RenderableInterface
 {
     /**
-     * @return LineInterface $line
+     * @param int $indent
+     *
+     * @return string
      */
-    public function render();
+    public function render($indent = 0);
 }
