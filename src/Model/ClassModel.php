@@ -5,6 +5,10 @@ namespace Krlove\Generator\Model;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\RenderableModel;
 
+/**
+ * Class ClassModel
+ * @package Krlove\Generator\Model
+ */
 class ClassModel extends RenderableModel
 {
     use DocBlockTrait;

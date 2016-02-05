@@ -3,7 +3,7 @@
 namespace Krlove\Generator\Model\Traits;
 
 /**
- * Class PHPValueTrait
+ * Trait PHPValueTrait
  * @package Krlove\Generator\Model\Traits
  */
 trait ValueTrait

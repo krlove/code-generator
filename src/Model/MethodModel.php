@@ -3,8 +3,11 @@
 namespace Krlove\Generator\Model;
 
 use Krlove\Generator\Exception\ValidationException;
+use Krlove\Generator\Model\Traits\AbstractModifierTrait;
 use Krlove\Generator\Model\Traits\AccessModifierTrait;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
+use Krlove\Generator\Model\Traits\FinalModifierTrait;
+use Krlove\Generator\Model\Traits\StaticModifierTrait;
 use Krlove\Generator\RenderableModel;
 
 /**
@@ -14,28 +17,16 @@ use Krlove\Generator\RenderableModel;
  */
 class MethodModel extends RenderableModel
 {
+    use AbstractModifierTrait;
     use AccessModifierTrait;
     use DocBlockTrait;
+    use FinalModifierTrait;
+    use StaticModifierTrait;
 
     /**
      * @var string
      */
     protected $name;
-
-    /**
-     * @var boolean
-     */
-    protected $static;
-
-    /**
-     * @var boolean
-     */
-    protected $final;
-
-    /**
-     * @var boolean;
-     */
-    protected $abstract;
 
     /**
      * @var ArgumentModel[]
@@ -155,63 +146,6 @@ class MethodModel extends RenderableModel
     public function addArgument(ArgumentModel $argument)
     {
         $this->arguments[] = $argument;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isStatic()
-    {
-        return $this->static;
-    }
-
-    /**
-     * @param boolean $static
-     * @return $this
-     */
-    public function setStatic($static = true)
-    {
-        $this->static = boolval($static);
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isFinal()
-    {
-        return $this->final;
-    }
-
-    /**
-     * @param boolean $final
-     * @return $this
-     */
-    public function setFinal($final = true)
-    {
-        $this->final = boolval($final);
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isAbstract()
-    {
-        return $this->abstract;
-    }
-
-    /**
-     * @param boolean $abstract
-     * @return $this
-     */
-    public function setAbstract($abstract = true)
-    {
-        $this->abstract = boolval($abstract);
 
         return $this;
     }

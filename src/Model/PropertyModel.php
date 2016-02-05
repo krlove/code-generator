@@ -4,6 +4,7 @@ namespace Krlove\Generator\Model;
 
 use Krlove\Generator\Model\Traits\AccessModifierTrait;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
+use Krlove\Generator\Model\Traits\StaticModifierTrait;
 use Krlove\Generator\Model\Traits\ValueTrait;
 use Krlove\Generator\RenderableModel;
 
@@ -16,17 +17,13 @@ class PropertyModel extends RenderableModel
 {
     use AccessModifierTrait;
     use DocBlockTrait;
+    use StaticModifierTrait;
     use ValueTrait;
 
     /**
      * @var string
      */
     protected $name;
-
-    /**
-     * @var boolean
-     */
-    protected $static;
 
     /**
      * PropertyModel constructor.
@@ -85,25 +82,6 @@ class PropertyModel extends RenderableModel
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isStatic()
-    {
-        return $this->static;
-    }
-
-    /**
-     * @param boolean $static
-     * @return $this
-     */
-    public function setStatic($static)
-    {
-        $this->static = boolval($static);
 
         return $this;
     }

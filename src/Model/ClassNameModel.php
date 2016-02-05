@@ -3,6 +3,8 @@
 namespace Krlove\Generator\Model;
 
 use Krlove\Generator\Exception\ValidationException;
+use Krlove\Generator\Model\Traits\AbstractModifierTrait;
+use Krlove\Generator\Model\Traits\FinalModifierTrait;
 use Krlove\Generator\RenderableModel;
 
 /**
@@ -11,20 +13,13 @@ use Krlove\Generator\RenderableModel;
  */
 class ClassNameModel extends RenderableModel
 {
+    use AbstractModifierTrait;
+    use FinalModifierTrait;
+
     /**
      * @var string
      */
     protected $name;
-
-    /**
-     * @var boolean
-     */
-    protected $final;
-
-    /**
-     * @var boolean
-     */
-    protected $abstract;
 
     /**
      * @var string
@@ -144,44 +139,6 @@ class ClassNameModel extends RenderableModel
     public function addImplements($implements)
     {
         $this->implements[] = $implements;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isFinal()
-    {
-        return $this->final;
-    }
-
-    /**
-     * @param boolean $final
-     * @return $this
-     */
-    public function setFinal($final = true)
-    {
-        $this->final = boolval($final);
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isAbstract()
-    {
-        return $this->abstract;
-    }
-
-    /**
-     * @param boolean $abstract
-     * @return $this
-     */
-    public function setAbstract($abstract = true)
-    {
-        $this->abstract = boolval($abstract);
 
         return $this;
     }

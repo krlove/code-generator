@@ -3,7 +3,7 @@
 namespace Krlove\Generator\Model\Traits;
 
 /**
- * Class AccessModifierTrait
+ * Trait AccessModifierTrait
  * @package Krlove\Generator\Model\Traits
  */
 trait AccessModifierTrait

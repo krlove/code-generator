@@ -5,7 +5,7 @@ namespace Krlove\Generator\Model\Traits;
 use Krlove\Generator\Model\DocBlockModel;
 
 /**
- * Class DocBlockTrait
+ * Trait DocBlockTrait
  * @package Krlove\Generator\Model\Traits
  */
 trait DocBlockTrait
