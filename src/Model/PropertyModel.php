@@ -6,6 +6,7 @@ use Krlove\Generator\Model\Traits\AccessModifierTrait;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\Model\Traits\StaticModifierTrait;
 use Krlove\Generator\Model\Traits\ValueTrait;
+use Krlove\Generator\Model\Traits\VirtualTrait;
 use Krlove\Generator\RenderableModel;
 
 /**
@@ -19,6 +20,7 @@ class PropertyModel extends RenderableModel
     use DocBlockTrait;
     use StaticModifierTrait;
     use ValueTrait;
+    use VirtualTrait;
 
     /**
      * @var string

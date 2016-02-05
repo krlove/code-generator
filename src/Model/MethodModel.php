@@ -8,6 +8,7 @@ use Krlove\Generator\Model\Traits\AccessModifierTrait;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\Model\Traits\FinalModifierTrait;
 use Krlove\Generator\Model\Traits\StaticModifierTrait;
+use Krlove\Generator\Model\Traits\VirtualTrait;
 use Krlove\Generator\RenderableModel;
 
 /**
@@ -22,6 +23,7 @@ class MethodModel extends RenderableModel
     use DocBlockTrait;
     use FinalModifierTrait;
     use StaticModifierTrait;
+    use VirtualTrait;
 
     /**
      * @var string
