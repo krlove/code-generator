@@ -15,6 +15,7 @@ abstract class RenderableModel implements RenderableInterface, LineableInterface
      */
     final public function render($indent = 0, $delimiter = PHP_EOL)
     {
+        $this->validate();
         $lines = $this->toLines();
 
         if (!is_array($lines)) {
@@ -28,6 +29,14 @@ abstract class RenderableModel implements RenderableInterface, LineableInterface
         }
 
         return implode($delimiter, $lines);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function validate()
+    {
+        return true;
     }
 
     /**
