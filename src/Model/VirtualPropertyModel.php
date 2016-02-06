@@ -30,7 +30,7 @@ class VirtualPropertyModel extends BasePropertyModel
      * @param string $name
      * @param string $type
      */
-    public function __construct($name, $type)
+    public function __construct($name, $type = null)
     {
         $this->setName($name)
             ->setType($type);
@@ -48,7 +48,11 @@ class VirtualPropertyModel extends BasePropertyModel
             $property .= '-read';
         }
 
-        return $property . ' ' . $this->type . ' $' . $this->name;
+        if ($this->type !== null) {
+            $property .= ' ' . $this->type;
+        }
+
+        return $property . ' $' . $this->name;
     }
 
     /**
