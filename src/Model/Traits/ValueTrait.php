@@ -51,15 +51,15 @@ trait ValueTrait
 
         switch ($type) {
             case 'boolean':
-                $value = $this->value ? 'true' : 'false';
+                $value = $value ? 'true' : 'false';
 
                 break;
             case 'int':
-                $value = $this->value;
+                // do nothing
 
                 break;
             case 'string':
-                $value = sprintf('\'%s\'', addslashes($this->getValue()));
+                $value = sprintf('\'%s\'', addslashes($value));
 
                 break;
             case 'array':
