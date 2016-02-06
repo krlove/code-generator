@@ -72,18 +72,6 @@ class ClassNameModel extends RenderableModel
     }
 
     /**
-     * {@inheritDoc}
-     */
-    protected function validate()
-    {
-        if ($this->final && $this->abstract) {
-            throw new ValidationException('Entity cannot be final and abstract at the same time');
-        }
-
-        return parent::validate();
-    }
-
-    /**
      * @return string
      */
     public function getName()
@@ -141,5 +129,17 @@ class ClassNameModel extends RenderableModel
         $this->implements[] = $implements;
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function validate()
+    {
+        if ($this->final && $this->abstract) {
+            throw new ValidationException('Entity cannot be final and abstract at the same time');
+        }
+
+        return parent::validate();
     }
 }

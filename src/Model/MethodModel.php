@@ -8,32 +8,19 @@ use Krlove\Generator\Model\Traits\AccessModifierTrait;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\Model\Traits\FinalModifierTrait;
 use Krlove\Generator\Model\Traits\StaticModifierTrait;
-use Krlove\Generator\Model\Traits\VirtualTrait;
-use Krlove\Generator\RenderableModel;
 
 /**
  * TODO: add support for virtual methods
  * Class PHPClassMethod
  * @package Krlove\Generator\Model
  */
-class MethodModel extends RenderableModel
+class MethodModel extends BaseMethodModel
 {
     use AbstractModifierTrait;
     use AccessModifierTrait;
     use DocBlockTrait;
     use FinalModifierTrait;
     use StaticModifierTrait;
-    use VirtualTrait;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var ArgumentModel[]
-     */
-    protected $arguments = [];
 
     /**
      * @var string
@@ -72,17 +59,8 @@ class MethodModel extends RenderableModel
         if ($this->static) {
             $function .= 'static ';
         }
-        $function .= 'function ' . $this->name . '(';
 
-        if ($this->arguments) {
-            $arguments = [];
-            foreach ($this->arguments as $argument) {
-                $arguments[] = $argument->render();
-            }
-
-            $function .= implode(', ', $arguments);
-        }
-        $function .= ')';
+        $function .= 'function ' . $this->name . '(' . $this->renderArguments() . ')';
 
         if ($this->abstract) {
             $function .= ';';
@@ -98,58 +76,6 @@ class MethodModel extends RenderableModel
         }
 
         return $lines;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function validate()
-    {
-        if ($this->abstract and ($this->final or $this->static)) {
-            throw new ValidationException('Entity cannot be abstract and final or static at the same time');
-        }
-
-        return parent::validate();
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return ArgumentModel[]
-     */
-    public function getArguments()
-    {
-        return $this->arguments;
-    }
-
-    /**
-     * @param ArgumentModel $argument
-     *
-     * @return $this
-     */
-    public function addArgument(ArgumentModel $argument)
-    {
-        $this->arguments[] = $argument;
-
-        return $this;
     }
 
     /**
@@ -170,5 +96,17 @@ class MethodModel extends RenderableModel
         $this->body = $body;
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function validate()
+    {
+        if ($this->abstract and ($this->final or $this->static)) {
+            throw new ValidationException('Entity cannot be abstract and final or static at the same time');
+        }
+
+        return parent::validate();
     }
 }

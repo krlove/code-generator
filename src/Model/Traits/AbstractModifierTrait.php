@@ -23,6 +23,7 @@ trait AbstractModifierTrait
 
     /**
      * @param boolean $abstract
+     *
      * @return $this
      */
     public function setAbstract($abstract = true)

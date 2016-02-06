@@ -23,6 +23,7 @@ trait AccessModifierTrait
 
     /**
      * @param string $access
+     *
      * @return $this
      */
     public function setAccess($access)

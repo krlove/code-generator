@@ -2,6 +2,7 @@
 
 namespace Krlove\Generator\Model;
 
+use Krlove\Generator\Exception\GeneratorException;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\RenderableModel;
 
@@ -39,12 +40,12 @@ class ClassModel extends RenderableModel
     protected $constants = [];
 
     /**
-     * @var PropertyModel[]
+     * @var BasePropertyModel[]
      */
     protected $properties = [];
 
     /**
-     * @var MethodModel[]
+     * @var BaseMethodModel[]
      */
     protected $methods = [];
 
@@ -61,6 +62,7 @@ class ClassModel extends RenderableModel
         if (count($this->uses) > 0) {
             $lines[] = $this->renderArrayLn($this->uses);
         }
+        $this->prepareDocBlock();
         if ($this->docBlock !== null) {
             $lines[] = $this->ln($this->docBlock->render());
         }
@@ -71,12 +73,8 @@ class ClassModel extends RenderableModel
         if (count($this->constants) > 0) {
             $lines[] = $this->renderArrayLn($this->constants, 4);
         }
-        if (count($this->properties) > 0) {
-            $lines[] = $this->renderArrayLn($this->properties, 4, str_repeat(PHP_EOL, 2));
-        }
-        if (count($this->methods) > 0) {
-            $lines[] = $this->renderArray($this->methods, 4, str_repeat(PHP_EOL, 2));
-        }
+        $this->processProperties($lines);
+        $this->processMethods($lines);
         $lines[] = $this->ln('}');
 
         return $lines;
@@ -183,7 +181,7 @@ class ClassModel extends RenderableModel
     }
 
     /**
-     * @return PropertyModel[]
+     * @return BasePropertyModel[]
      */
     public function getProperties()
     {
@@ -191,11 +189,11 @@ class ClassModel extends RenderableModel
     }
 
     /**
-     * @param PropertyModel $property
+     * @param BasePropertyModel $property
      *
      * @return $this
      */
-    public function addProperty(PropertyModel $property)
+    public function addProperty(BasePropertyModel $property)
     {
         $this->properties[] = $property;
 
@@ -203,7 +201,7 @@ class ClassModel extends RenderableModel
     }
 
     /**
-     * @return MethodModel[]
+     * @return BaseMethodModel[]
      */
     public function getMethods()
     {
@@ -211,14 +209,69 @@ class ClassModel extends RenderableModel
     }
 
     /**
-     * @param MethodModel
+     * @param BaseMethodModel
      *
      * @return $this
      */
-    public function addMethod(MethodModel $method)
+    public function addMethod(BaseMethodModel $method)
     {
         $this->methods[] = $method;
 
         return $this;
+    }
+
+    /**
+     * Convert virtual properties and methods to DocBlock content
+     */
+    protected function prepareDocBlock()
+    {
+        $content = [];
+
+        foreach ($this->properties as $property) {
+            if ($property instanceof VirtualPropertyModel) {
+                $content[] = $property->toLines();
+            }
+        }
+
+        foreach ($this->methods as $method) {
+            if ($method instanceof VirtualMethodModel) {
+                $content[] = $method->toLines();
+            }
+        }
+
+        if ($content) {
+            if ($this->docBlock === null) {
+                $this->docBlock = new DocBlockModel();
+            }
+
+            $this->docBlock->addContent($content);
+        }
+    }
+
+    /**
+     * @param array $lines
+     */
+    protected function processProperties(&$lines)
+    {
+        $properties = array_filter($this->properties, function ($property) {
+            return !$property instanceof VirtualPropertyModel;
+        });
+        if (count($properties) > 0) {
+            $lines[] = $this->renderArrayLn($properties, 4, str_repeat(PHP_EOL, 2));
+        }
+    }
+
+    /**
+     * @param array $lines
+     * @throws GeneratorException
+     */
+    protected function processMethods(&$lines)
+    {
+        $methods = array_filter($this->methods, function ($method) {
+            return !$method instanceof VirtualMethodModel;
+        });
+        if (count($methods) > 0) {
+            $lines[] = $this->renderArray($methods, 4, str_repeat(PHP_EOL, 2));
+        }
     }
 }

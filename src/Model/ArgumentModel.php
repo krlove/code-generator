@@ -44,9 +44,9 @@ class ArgumentModel extends RenderableModel
     public function toLines()
     {
         if ($this->type !== null) {
-            return $this->type . ' ' . $this->name;
+            return $this->type . ' $' . $this->name;
         } else {
-            return $this->name;
+            return '$' . $this->name;
         }
     }
 

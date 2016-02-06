@@ -6,21 +6,18 @@ use Krlove\Generator\Model\Traits\AccessModifierTrait;
 use Krlove\Generator\Model\Traits\DocBlockTrait;
 use Krlove\Generator\Model\Traits\StaticModifierTrait;
 use Krlove\Generator\Model\Traits\ValueTrait;
-use Krlove\Generator\Model\Traits\VirtualTrait;
-use Krlove\Generator\RenderableModel;
 
 /**
  * TODO: Add support for virtual properties
  * Class PHPClassProperty
  * @package Krlove\Generator\Model
  */
-class PropertyModel extends RenderableModel
+class PropertyModel extends BasePropertyModel
 {
     use AccessModifierTrait;
     use DocBlockTrait;
     use StaticModifierTrait;
     use ValueTrait;
-    use VirtualTrait;
 
     /**
      * @var string
@@ -54,7 +51,7 @@ class PropertyModel extends RenderableModel
         if ($this->static) {
             $property .= 'static ';
         }
-        $property .= $this->name;
+        $property .= '$' . $this->name;
 
         if ($this->value !== null) {
             $value = $this->renderValue();
@@ -66,25 +63,5 @@ class PropertyModel extends RenderableModel
         $lines[] = $property;
 
         return $lines;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
     }
 }

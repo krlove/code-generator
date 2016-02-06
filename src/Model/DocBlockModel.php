@@ -54,13 +54,19 @@ class DocBlockModel extends RenderableModel
     }
 
     /**
-     * @param string $content
+     * @param array|string $content
      *
      * @return $this
      */
     public function addContent($content)
     {
-        $this->content[] = $content;
+        if (is_array($content)) {
+            foreach ($content as $item) {
+                $this->addContent($item);
+            }
+        } else {
+            $this->content[] = $content;
+        }
 
         return $this;
     }

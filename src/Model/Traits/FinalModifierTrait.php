@@ -23,6 +23,7 @@ trait FinalModifierTrait
 
     /**
      * @param boolean $final
+     *
      * @return $this
      */
     public function setFinal($final = true)

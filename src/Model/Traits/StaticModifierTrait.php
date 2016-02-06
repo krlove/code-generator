@@ -23,6 +23,7 @@ trait StaticModifierTrait
 
     /**
      * @param boolean $static
+     *
      * @return $this
      */
     public function setStatic($static = true)
