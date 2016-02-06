@@ -38,23 +38,40 @@ trait ValueTrait
      */
     protected function renderValue()
     {
-        $type = gettype($this->value);
+        return $this->renderTyped($this->value);
+    }
+
+    /**
+     * @param mixed $value
+     * @return string|null
+     */
+    protected function renderTyped($value)
+    {
+        $type = gettype($value);
 
         switch ($type) {
             case 'boolean':
                 $value = $this->value ? 'true' : 'false';
+
                 break;
             case 'int':
                 $value = $this->value;
+
                 break;
             case 'string':
                 $value = sprintf('\'%s\'', addslashes($this->getValue()));
+
                 break;
             case 'array':
-                $value = '1'; // TODO: add array support
+                $parts = [];
+                foreach ($value as $item) {
+                    $parts[] = $this->renderTyped($item);
+                }
+                $value = implode(', ', $parts);
+
                 break;
             default:
-                $value = null;
+                $value = null; // TODO: how to render null explicitly?
         }
 
         return $value;
