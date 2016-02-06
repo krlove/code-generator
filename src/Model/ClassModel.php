@@ -64,7 +64,7 @@ class ClassModel extends RenderableModel
         }
         $this->prepareDocBlock();
         if ($this->docBlock !== null) {
-            $lines[] = $this->ln($this->docBlock->render());
+            $lines[] = $this->docBlock->render();
         }
         $lines[] = $this->name->render();
         if (count($this->traits) > 0) {
