@@ -10,7 +10,6 @@ use Krlove\Generator\Model\Traits\FinalModifierTrait;
 use Krlove\Generator\Model\Traits\StaticModifierTrait;
 
 /**
- * TODO: add support for virtual methods
  * Class PHPClassMethod
  * @package Krlove\Generator\Model
  */

@@ -8,7 +8,7 @@ use Krlove\Generator\Model\Traits\StaticModifierTrait;
 use Krlove\Generator\Model\Traits\ValueTrait;
 
 /**
- * TODO: Add support for virtual properties
+
  * Class PHPClassProperty
  * @package Krlove\Generator\Model
  */
