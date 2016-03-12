@@ -1,10 +1,10 @@
 <?php
 
-namespace Krlove\Generator\Model\Traits;
+namespace Krlove\CodeGenerator\Model\Traits;
 
 /**
  * Trait AccessModifierTrait
- * @package Krlove\Generator\Model\Traits
+ * @package Krlove\CodeGenerator\Model\Traits
  */
 trait AccessModifierTrait
 {

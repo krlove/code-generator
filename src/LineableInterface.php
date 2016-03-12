@@ -1,10 +1,10 @@
 <?php
 
-namespace Krlove\Generator;
+namespace Krlove\CodeGenerator;
 
 /**
- * Interface ArrayableInterface
- * @package Krlove\Generator
+ * Interface LineableInterface
+ * @package Krlove\CodeGenerator
  */
 interface LineableInterface
 {

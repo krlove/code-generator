@@ -1,10 +1,10 @@
 <?php
 
-namespace Krlove\Generator\Model\Traits;
+namespace Krlove\CodeGenerator\Model\Traits;
 
 /**
- * Trait StaticMidifierTrait
- * @package Krlove\Generator\Model\Traits
+ * Trait StaticModifierTrait
+ * @package Krlove\CodeGenerator\Model\Traits
  */
 trait StaticModifierTrait
 {

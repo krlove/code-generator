@@ -1,10 +1,10 @@
 <?php
 
-namespace Krlove\Generator\Exception;
+namespace Krlove\CodeGenerator\Exception;
 
 /**
  * Class ValidationException
- * @package Krlove\Generator\Exception
+ * @package Krlove\CodeGenerator\Exception
  */
 class ValidationException extends \Exception
 {

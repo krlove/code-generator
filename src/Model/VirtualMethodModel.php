@@ -1,10 +1,10 @@
 <?php
 
-namespace Krlove\Generator\Model;
+namespace Krlove\CodeGenerator\Model;
 
 /**
  * Class VirtualMethodModel
- * @package Krlove\Generator\Model
+ * @package Krlove\CodeGenerator\Model
  */
 class VirtualMethodModel extends BaseMethodModel
 {

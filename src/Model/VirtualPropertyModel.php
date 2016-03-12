@@ -1,12 +1,12 @@
 <?php
 
-namespace Krlove\Generator\Model;
+namespace Krlove\CodeGenerator\Model;
 
-use Krlove\Generator\Exception\ValidationException;
+use Krlove\CodeGenerator\Exception\ValidationException;
 
 /**
  * Class VirtualPropertyModel
- * @package Krlove\Generator\Model
+ * @package Krlove\CodeGenerator\Model
  */
 class VirtualPropertyModel extends BasePropertyModel
 {

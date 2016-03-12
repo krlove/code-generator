@@ -1,12 +1,12 @@
 <?php
 
-namespace Krlove\Generator;
+namespace Krlove\CodeGenerator;
 
-use Krlove\Generator\Exception\GeneratorException;
+use Krlove\CodeGenerator\Exception\GeneratorException;
 
 /**
  * Class RenderableModel
- * @package Krlove\Generator
+ * @package Krlove\CodeGenerator
  */
 abstract class RenderableModel implements RenderableInterface, LineableInterface
 {
