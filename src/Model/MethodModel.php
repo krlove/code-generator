@@ -69,7 +69,7 @@ class MethodModel extends BaseMethodModel
         if (!$this->abstract) {
             $lines[] = '{';
             if ($this->body) {
-                $lines[] = $this->body; // TODO: make body renderable
+                $lines[] = sprintf('    %s', $this->body); // TODO: make body renderable
             }
             $lines[] = '}';
         }
