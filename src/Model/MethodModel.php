@@ -44,7 +44,7 @@ class MethodModel extends BaseMethodModel
     {
         $lines = [];
         if ($this->docBlock !== null) {
-            $lines[] = $this->docBlock->render();
+            $lines = array_merge($lines, $this->docBlock->toLines());
         }
 
         $function = '';
