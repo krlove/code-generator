@@ -44,7 +44,7 @@ class PropertyModel extends BasePropertyModel
     {
         $lines = [];
         if ($this->docBlock !== null) {
-            $lines[] = $this->docBlock->render();
+            $lines = array_merge($lines, $this->docBlock->toLines());
         }
 
         $property = $this->access . ' ';
