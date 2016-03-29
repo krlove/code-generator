@@ -5,10 +5,10 @@ namespace Krlove\CodeGenerator\Model;
 use Krlove\CodeGenerator\RenderableModel;
 
 /**
- * Class PHPClassUse
+ * Class UseClassModel
  * @package Krlove\CodeGenerator\Model
  */
-class UseNamespaceModel extends RenderableModel
+class UseClassModel extends RenderableModel
 {
     /**
      * @var string

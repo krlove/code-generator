@@ -25,7 +25,7 @@ class ClassModel extends RenderableModel
     protected $namespace;
 
     /**
-     * @var UseNamespaceModel[]
+     * @var UseClassModel[]
      */
     protected $uses = [];
 
@@ -121,7 +121,7 @@ class ClassModel extends RenderableModel
     }
 
     /**
-     * @return UseNamespaceModel[]
+     * @return UseClassModel[]
      */
     public function getUses()
     {
@@ -129,11 +129,11 @@ class ClassModel extends RenderableModel
     }
 
     /**
-     * @param UseNamespaceModel $use
+     * @param UseClassModel $use
      *
      * @return $this
      */
-    public function addUses(UseNamespaceModel $use)
+    public function addUses(UseClassModel $use)
     {
         $this->uses[] = $use;
 
