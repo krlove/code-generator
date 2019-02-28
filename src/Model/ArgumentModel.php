@@ -29,7 +29,7 @@ class ArgumentModel extends RenderableModel
      * ArgumentModel constructor.
      * @param string $name
      * @param string|null $type
-     * @param mixed|null $default
+     * @param mixed|null $default used "as is"
      */
     public function __construct($name, $type = null, $default = null)
     {
@@ -43,11 +43,12 @@ class ArgumentModel extends RenderableModel
      */
     public function toLines()
     {
-        if ($this->type !== null) {
-            return $this->type . ' $' . $this->name;
-        } else {
+        if ($this->default !== null) {
+            return ltrim($this->type?:'' . ' $' . $this->name. ' = ' .$this->default);
+         } else {
             return '$' . $this->name;
-        }
+            return ltrim($this->type?:'' . ' $' . $this->name);
+         }
     }
 
     /**
