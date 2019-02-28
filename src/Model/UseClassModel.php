@@ -33,8 +33,8 @@ class UseClassModel extends RenderableModel
      * {@inheritDoc}
      */
     public function toLines()
-    {   
-        if (is_null($this->alias) {
+    {
+        if (is_null($this->alias)) {
             return sprintf('use %s;', $this->name);
         }
         else {
@@ -49,7 +49,7 @@ class UseClassModel extends RenderableModel
     {
         return $this->name;
     }
-            
+
     /**
      * @return string
      */
