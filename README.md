@@ -87,7 +87,7 @@ class TestClass extends BaseTestClass implements \NamespaceOne\InterfaceOne, Int
     use TraitTwo;
 
     const CONST_ONE = 'value';
-    const CONST_TWO = ;
+    const CONST_TWO = 1;
 
     public $propertyOne;
 
