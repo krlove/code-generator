@@ -75,6 +75,10 @@ class ClassModel extends RenderableModel
         }
         $this->processProperties($lines);
         $this->processMethods($lines);
+        /**
+         * Fix the bug with empty line before closing bracket
+         */
+        $lines[count($lines) - 1] = rtrim($lines[count($lines) - 1]);
         $lines[] = $this->ln('}');
 
         return $lines;
