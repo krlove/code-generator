@@ -248,6 +248,8 @@ class ClassModel extends RenderableModel
                 $this->docBlock = new DocBlockModel();
             }
 
+            $content[] = '@mixin \Eloquent';
+
             $this->docBlock->addContent($content);
         }
     }
