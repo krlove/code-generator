@@ -14,14 +14,19 @@ class UseClassModel extends RenderableModel
      * @var string
      */
     protected $name;
+    /**
+     * @var string
+     */
+    protected $alias=null;
 
     /**
      * PHPClassUse constructor.
      * @param string $name
      */
-    public function __construct($name)
+    public function __construct($name,$alias=null)
     {
         $this->name = $name;
+        if ($alias) $this->alias=$alias;
     }
 
     /**
@@ -29,7 +34,12 @@ class UseClassModel extends RenderableModel
      */
     public function toLines()
     {
-        return sprintf('use %s;', $this->name);
+        if (is_null($this->alias)) {
+            return sprintf('use %s;', $this->name);
+        }
+        else {
+            return sprintf('use %s as %s;', $this->name,$this->alias);
+        }
     }
 
     /**
@@ -41,6 +51,14 @@ class UseClassModel extends RenderableModel
     }
 
     /**
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
      * @param string $name
      *
      * @return $this
@@ -48,6 +66,18 @@ class UseClassModel extends RenderableModel
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param string $alias
+     *
+     * @return $this
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
 
         return $this;
     }
