@@ -93,6 +93,16 @@ class ClassModel extends RenderableModel
     }
 
     /**
+    * @return BaseMethodModel[]
+    */
+    public function resetMethods()
+    {
+    $this->methods = array();
+
+    return $this;
+    }
+
+    /**
      * @param ClassNameModel $name
      *
      * @return $this
