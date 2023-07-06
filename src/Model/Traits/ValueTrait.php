@@ -65,10 +65,17 @@ trait ValueTrait
                 break;
             case 'array':
                 $parts = [];
-                foreach ($value as $item) {
-                    $parts[] = $this->renderTyped($item);
+                $isAssociate = false;
+                foreach ($value as $key => $item) {
+                    $isAssociate = !is_integer($key);
+                    if ($isAssociate) {
+                        $parts[] = PHP_EOL . "\t\t'" . $key . "' => " .$this->renderTyped($item);
+
+                    } else {
+                        $parts[] = $this->renderTyped($item);
+                    }
                 }
-                $value = '[' . implode(', ', $parts) . ']';
+                $value = '[' . implode(', ', $parts) . ($isAssociate ? "\n\t" : "") . ']';
 
                 break;
             default:
